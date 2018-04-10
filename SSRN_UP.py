@@ -65,8 +65,8 @@ def res4_model_ss():
 
     return model_res4
 
-uPavia = sio.loadmat('/home/zilong/SSRN/datasets/UP/PaviaU.mat')
-gt_uPavia = sio.loadmat('/home/zilong/SSRN/datasets/UP/PaviaU_gt.mat')
+uPavia = sio.loadmat('/home/beer/Projects/SSRN/datasets/UP/PaviaU.mat')
+gt_uPavia = sio.loadmat('/home/beer/Projects/SSRN/datasets/UP/PaviaU_gt.mat')
 data_IN = uPavia['paviaU']
 gt_IN = gt_uPavia['paviaU_gt']
 print (data_IN.shape)
@@ -128,7 +128,7 @@ seeds = [1334]
 for index_iter in xrange(ITER):
     print("# %d Iteration" % (index_iter + 1))
     
-    best_weights_RES_path_ss4 = '/home/zilong/SSRN/models/UP_best_RES_3D_SS4_5_' +  str(index_iter+1) +'.hdf5'
+    best_weights_RES_path_ss4 = '/home/beer/Projects/SSRN/models/UP_best_RES_3D_SS4_5_' +  str(index_iter+1) +'.hdf5'
 
     np.random.seed(seeds[index_iter])
 #    train_indices, test_indices = sampleFixNum.samplingFixedNum(TRAIN_NUM, gt)
@@ -220,5 +220,5 @@ for index_iter in xrange(ITER):
 modelStatsRecord.outputStats(KAPPA_RES_SS4, OA_RES_SS4, AA_RES_SS4, ELEMENT_ACC_RES_SS4,
                              TRAINING_TIME_RES_SS4,TESTING_TIME_RES_SS4,
                              history_res4_SS, loss_and_metrics_res4_SS, CATEGORY,
-                             '/home/zilong/SSRN/records/UP_train_SS_10.txt',
-                             '/home/zilong/SSRN/records/UP_train_SS_element_10.txt')
+                             '/home/beer/Projects/SSRN/records/UP_train_SS_10.txt',
+                             '/home/beer/Projects/SSRN/records/UP_train_SS_element_10.txt')

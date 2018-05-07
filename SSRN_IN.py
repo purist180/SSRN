@@ -66,7 +66,8 @@ def res4_model_ss():
 
     RMS = RMSprop(lr=0.0003)
     # Let's train the model using RMSprop
-    model_res4 = keras.utils.training_utils.multi_gpu_model(model_res4, gpus=2)
+
+    model_res4 = keras.utils.multi_gpu_model(model_res4, gpus=2)
     model_res4.compile(loss='categorical_crossentropy', optimizer=RMS, metrics=['accuracy'])
 
     return model_res4

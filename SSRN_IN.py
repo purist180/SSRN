@@ -15,7 +15,7 @@ import collections
 from sklearn import metrics, preprocessing
 
 from Utils import zeroPadding, normalization, doPCA, modelStatsRecord, averageAccuracy, ssrn_SS_IN
-
+import keras
 
 def indexToAssignment(index_, Row, Col, pad_length):
     new_assign = {}
@@ -66,6 +66,7 @@ def res4_model_ss():
 
     RMS = RMSprop(lr=0.0003)
     # Let's train the model using RMSprop
+    model_res4 = keras.utils.training_utils.multi_gpu_model(model_res4, gpus=2)
     model_res4.compile(loss='categorical_crossentropy', optimizer=RMS, metrics=['accuracy'])
 
     return model_res4
@@ -81,10 +82,10 @@ gt_IN = mat_gt['indian_pines_gt']
 # new_gt_IN = set_zeros(gt_IN, [1,4,7,9,13,15,16])
 new_gt_IN = gt_IN
 
-batch_size = 16
+batch_size = 128
 nb_classes = 16
 nb_epoch = 200  # 400
-img_rows, img_cols = 7, 7  # 27, 27
+img_rows, img_cols = 9, 9  # 27, 27
 patience = 200
 
 INPUT_DIMENSION_CONV = 200
@@ -104,7 +105,7 @@ VALIDATION_SPLIT = 0.8  # 20% for trainnig and 80% for validation and testing
 # VAL_SIZE = TRAIN_SIZE
 
 img_channels = 200
-PATCH_LENGTH = 3  # Patch_size (13*2+1)*(13*2+1)
+PATCH_LENGTH = 4  # Patch_size (13*2+1)*(13*2+1)
 
 data = data_IN.reshape(np.prod(data_IN.shape[:2]), np.prod(data_IN.shape[2:]))
 gt = new_gt_IN.reshape(np.prod(new_gt_IN.shape[:2]), )
@@ -138,7 +139,7 @@ ELEMENT_ACC_RES_SS4 = np.zeros((ITER, CATEGORY))
 
 seeds = [1334]
 
-for index_iter in xrange(ITER):
+for index_iter in range(ITER):
     print("# %d Iteration" % (index_iter + 1))
 
     # save the best validated model 
